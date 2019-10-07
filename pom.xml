@@ -2,26 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.revof11</groupId>
+  <groupId>com.mltest</groupId>
   <artifactId>docker-selenium</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Docker Selenium Example</name>
   <description>
-    Sample project showing how to use the SeleniumHQ Docker images with a basic
-    Java project.  This focuses on a simple instance of Chrome set up on an
-    Ubuntu Linux instance as provided by the root repository.  For details on
-    how the Docker images actually work, see the documentation that has been
-    provided in their repositories.  We only cover what is necessary to get
-    started using them here assuming they don't disappear on us.
+    MoneyLion Test Assigment
   </description>
-  <inceptionYear>2017</inceptionYear>
-  <url>https://www.revof11.com</url>
-  <organization>
-    <name>Joe Brutto</name>
-    <url>http://www.revof11.com</url>
-  </organization>
 
   <properties>
     <build.timestamp>${maven.build.timestamp}</build.timestamp>

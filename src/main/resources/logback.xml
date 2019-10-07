@@ -6,7 +6,7 @@
     </encoder>
   </appender>
 
-  <logger name="com.revof11" level="INFO" additivity="false">
+  <logger name="com.mltest" level="INFO" additivity="false">
     <appender-ref ref="STDOUT" />
   </logger>
 
