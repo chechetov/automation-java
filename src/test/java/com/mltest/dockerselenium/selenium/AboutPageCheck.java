@@ -26,47 +26,46 @@ public class AboutPageCheck extends AbstractSeleniumTest {
         System.err.println("Browser name in @BeforeClass is " + MLMainUrl);
     }
 
-/** 
-    It is my wrapper to simpify things here 
-    inp: css_selector, action
-*/
-
-public void LookAndActCss(String selector,String action){
-	/** action = "click" || "hover" */
+public void LookAndHoverCss(String selector){
 
 	WebDriverWait wait = new WebDriverWait(driver,6);
 
 	LOG.info("Looking for CSS: \n {} \n", selector);
 
 	WebElement targetElement = wait.until
-	(ExpectedConditions.elementToBeClickable(
-		By.cssSelector(selector)
-		)
-	);
+	(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
 
-	if(targetElement.isDisplayed()){
-		
-		LOG.info("Element was found!");
-		
-		if(action == "click"){
-		targetElement.click();
-		}
-
-		if(action == "hover"){
-			String javaScript = "var evObj = document.createEvent('MouseEvents');" +
+	String javaScript = "var evObj = document.createEvent('MouseEvents');" +
 			"evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" +
 			"arguments[0].dispatchEvent(evObj);";
-            JavascriptExecutor js  = (JavascriptExecutor) driver;
-            js.executeScript(javaScript, targetElement);
-		}
-		else{
-			LOG.info("NO ACTION WAS DONE SOMETHING WRONG");
-		}
-	}
+    JavascriptExecutor js  = (JavascriptExecutor) driver;
+    js.executeScript(javaScript, targetElement);
+
+}
+
+/** 
+    It is my wrapper to simpify things here 
+    inp: css_selector
+*/
+
+public void LookAndClickCss(String selector){
+
+
+	WebDriverWait wait = new WebDriverWait(driver,6);
+
+	LOG.info("Looking for CSS: \n {} \n", selector);
+
+	WebElement targetElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
+
+	if (targetElement.isDisplayed() ){
+		LOG.info("Element was found!");
+		targetElement.click();
+		} 
 	else{
 		LOG.info("Element was NOT found: \n {} \n", selector);
 	}
-}
+	}
+
 /** Passed via testng.xml
 */
 @Parameters({"MLMainUrl"})
@@ -75,8 +74,15 @@ public void AboutTextCheck(String MLMainUrl){
 
 	driver.navigate().to(MLMainUrl);
 
-	LookAndActCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20","click");
+	/** WORKS */
+
 	
+	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
+
+	/**
+	LookAndActCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)","hover");
+	*/
+
 try {
 	Thread.sleep(1000 * 5);   // 1 sec = 1000 millisecs
 } 
