@@ -12,21 +12,38 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.BeforeClass;
-import org.openqa.selenium.JavascriptExecutor; 
-
+import org.openqa.selenium.JavascriptExecutor;
+import org.testng.Assert;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AboutPageCheck extends AbstractSeleniumTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AboutPageCheck.class);
 
-
+/**
 
 @Parameters({"MLMainUrl"})
 @BeforeClass
     public void setup(String MLMainUrl) {
         System.err.println("Browser name in @BeforeClass is " + MLMainUrl);
     }
+*/
+
+public void ThreadSleep(int seconds){
+	try {
+		LOG.info("Sleeping for : {} seconds",seconds);
+		Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
+	} 
+	catch(InterruptedException ex) {
+		Thread.currentThread().interrupt();
+	}
+}
+
+/** 
+These are my wrappers to simplify hieararchy and logic 
+*/
 
 public void LookAndHoverCss(String selector){
 
@@ -49,7 +66,6 @@ public void LookAndHoverCss(String selector){
 	else {
 		LOG.info("Element was not located and hovered: \n {} \n", selector);
 	}
-
 }
 
 public void LookAndClickJSElement(String selector){
@@ -89,52 +105,23 @@ public void VerifyText(String selector){
 	LOG.info("Checking the text");
 	String textToSearch = "OVER 1 MILLION BANK ACCOUNTS LINKED";
 
+
 	String actualText = (String) executor.executeScript("return arguments[0].lastChild.textContent", targetElement);
 
 	LOG.info("textToSearch : {} \n", textToSearch);
 	LOG.info("actualText : {} \n", actualText);
 
-/*
-	executor.executeScript("document.querySelector(\"#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.tab-0-94 > div > div > div > div > p\").textContent");
-*/
-/**
-	String javascript = "$(\"#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79\").click();";
-	String javascript2 = "document.querySelector("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79").click()";
-	executor.executeScript(javascript2);
-*/
-	//*[@id="root"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]
-	
-	/**
-	WebDriverWait wait = new WebDriverWait(driver,10)
-	WebElement targetElement = driver.findElement(By.cssSelector(selector));
-		executor.executeScript("arguments[0].scrollIntoView(true);", targetElement);
-
-	*/
+	Map<String, String> map = new HashMap<String, String>();
+	map.put("textToSearch", textToSearch);
+	map.put("actualText", actualText);
+	LOG.info("DICT TEXT: {}",map.get("actualText"));
+	Assert.assertEquals(map.get("actualText"), map.get("actualText"));
 }
-
-public void ThreadSleep(int seconds){
-	try {
-	LOG.info("Sleeping for : {} seconds",seconds);
-	Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
-} 
-catch(InterruptedException ex) {
-	Thread.currentThread().interrupt();
-}
-
-}
-
-/** 
-    It is my wrapper to simpify things here 
-    inp: css_selector
-*/
 
 public void LookAndClickCss(String selector){
 
-
 	WebDriverWait wait = new WebDriverWait(driver,6);
-
 	LOG.info("Looking for CSS: \n {} \n", selector);
-
 	WebElement targetElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
 
 	if (targetElement.isDisplayed() ){
@@ -144,53 +131,35 @@ public void LookAndClickCss(String selector){
 	else{
 		LOG.info("Element was NOT found: \n {} \n", selector);
 	}
-	}
+}
 
-/** Passed via testng.xml
+/** 
+Passed via testng.xml
 */
+
 @Parameters({"MLMainUrl"})
 @Test
 public void AboutTextCheck(String MLMainUrl){
 
 	driver.navigate().to(MLMainUrl);
 
-	/** WORKS */
+	/** 
+	Now let me use my wrappers 
+	ThreadSleeps for safety
+	*/
 
-	/**
-	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
-	*/
-	
-	/**
-	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
-	*/
 	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)");
+	ThreadSleep(2);
 	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3) > div > a:nth-child(1)");
+	ThreadSleep(2);
 	LookAndClickJSElement("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]");
-
-
-	ThreadSleep(10);
-
+	ThreadSleep(5);
 	VerifyText("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[1]/div/div/div");
-
-	/**
-	LookAndClickCss("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79");
-
-	LookAndClickCss("#root > div > div > div.block-0-223 > div > div > div:nth-child(2) > div.arrowContainer-0-214 > div.forwardsArrowContainer-0-230");		/**
-
-	LookAndActCss("","hover");
-	*/
-
-
-	/**
-	WebElement menuButton1 = driver.findElement(By.cssSelector("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20"));
-	*/
+	takeScreenshot(driver);
 
 }
-
 /** CLASS END */
 }
-
-
 
 /** private static final Logger LOG = LoggerFactory.getLogger(AboutPageCheck.class); */
 
