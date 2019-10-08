@@ -54,55 +54,62 @@ public void LookAndHoverCss(String selector){
 
 public void LookAndClickJSElement(String selector){
 
-	LOG.info("Looking for CSS: \n {} \n", selector);
 	JavascriptExecutor executor = (JavascriptExecutor)driver;
 
+	/* Need to know percentage here */
 	LOG.info("Scrolling Down");
-	executor.executeScript(("window.scrollBy(0,1200);"));
+	executor.executeScript(("window.scrollBy(0,1100);"));
 
 	ThreadSleep(10);
-
 	WebDriverWait wait = new WebDriverWait(driver,10);
 
+	LOG.info("Looking for Xpath: \n {} \n", selector);
 	WebElement targetElement = wait.until
 	(ExpectedConditions.elementToBeClickable(By.xpath(selector)));
 
 	LOG.info("Clicking: \n {} \n", selector);
 	executor.executeScript("arguments[0].click();", targetElement);
+	ThreadSleep(1);
 	executor.executeScript("arguments[0].click();", targetElement);
 
-	LOG.info("Checking the text");
-	String textToSearch;
-
-
-
 	/*
-	document.querySelector("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.tab-0-94 > div > div > div > div > p").textContent
 	*/
+}
 
-	ThreadSleep(10);
+public void VerifyText(String selector){
 
+	JavascriptExecutor executor = (JavascriptExecutor)driver;
+	WebDriverWait wait = new WebDriverWait(driver,10);
+
+	LOG.info("Looking for Xpath: \n {} \n", selector);
+
+	WebElement targetElement = wait.until
+	(ExpectedConditions.elementToBeClickable(By.xpath(selector)));
+
+	LOG.info("Checking the text");
+	String textToSearch = "OVER 1 MILLION BANK ACCOUNTS LINKED";
+
+	String actualText = (String) executor.executeScript("return arguments[0].lastChild.textContent", targetElement);
+
+	LOG.info("textToSearch : {} \n", textToSearch);
+	LOG.info("actualText : {} \n", actualText);
+
+/*
+	executor.executeScript("document.querySelector(\"#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.tab-0-94 > div > div > div > div > p\").textContent");
+*/
 /**
-
 	String javascript = "$(\"#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79\").click();";
-
 	String javascript2 = "document.querySelector("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79").click()";
 	executor.executeScript(javascript2);
 */
 	//*[@id="root"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]
 	
 	/**
-
-	WebDriverWait wait = new WebDriverWait(driver,10);
-
-
+	WebDriverWait wait = new WebDriverWait(driver,10)
 	WebElement targetElement = driver.findElement(By.cssSelector(selector));
 		executor.executeScript("arguments[0].scrollIntoView(true);", targetElement);
 
 	*/
-	
-
-	
 }
 
 public void ThreadSleep(int seconds){
@@ -159,6 +166,11 @@ public void AboutTextCheck(String MLMainUrl){
 	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)");
 	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3) > div > a:nth-child(1)");
 	LookAndClickJSElement("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]");
+
+
+	ThreadSleep(10);
+
+	VerifyText("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[1]/div/div/div");
 
 	/**
 	LookAndClickCss("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79");
