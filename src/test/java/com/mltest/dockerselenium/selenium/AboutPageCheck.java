@@ -52,6 +52,70 @@ public void LookAndHoverCss(String selector){
 
 }
 
+public void LookAndClickJSElement(String selector){
+
+	LOG.info("Looking for CSS: \n {} \n", selector);
+	JavascriptExecutor executor = (JavascriptExecutor)driver;
+
+	LOG.info("Scrolling Down");
+	executor.executeScript(("window.scrollBy(0,1200);"));
+
+	ThreadSleep(10);
+
+	WebDriverWait wait = new WebDriverWait(driver,10);
+
+	WebElement targetElement = wait.until
+	(ExpectedConditions.elementToBeClickable(By.xpath(selector)));
+
+	LOG.info("Clicking: \n {} \n", selector);
+	executor.executeScript("arguments[0].click();", targetElement);
+	executor.executeScript("arguments[0].click();", targetElement);
+
+	LOG.info("Checking the text");
+	String textToSearch;
+
+
+
+	/*
+	document.querySelector("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.tab-0-94 > div > div > div > div > p").textContent
+	*/
+
+	ThreadSleep(10);
+
+/**
+
+	String javascript = "$(\"#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79\").click();";
+
+	String javascript2 = "document.querySelector("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79").click()";
+	executor.executeScript(javascript2);
+*/
+	//*[@id="root"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]
+	
+	/**
+
+	WebDriverWait wait = new WebDriverWait(driver,10);
+
+
+	WebElement targetElement = driver.findElement(By.cssSelector(selector));
+		executor.executeScript("arguments[0].scrollIntoView(true);", targetElement);
+
+	*/
+	
+
+	
+}
+
+public void ThreadSleep(int seconds){
+	try {
+	LOG.info("Sleeping for : {} seconds",seconds);
+	Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
+} 
+catch(InterruptedException ex) {
+	Thread.currentThread().interrupt();
+}
+
+}
+
 /** 
     It is my wrapper to simpify things here 
     inp: css_selector
@@ -93,18 +157,17 @@ public void AboutTextCheck(String MLMainUrl){
 	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
 	*/
 	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)");
+	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3) > div > a:nth-child(1)");
+	LookAndClickJSElement("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]");
 
 	/**
+	LookAndClickCss("#root > div > div > div.block-0-72 > div > div > div:nth-child(2) > div.arrowContainer-0-63 > div.forwardsArrowContainer-0-79");
+
+	LookAndClickCss("#root > div > div > div.block-0-223 > div > div > div:nth-child(2) > div.arrowContainer-0-214 > div.forwardsArrowContainer-0-230");		/**
 
 	LookAndActCss("","hover");
 	*/
 
-try {
-	Thread.sleep(1000 * 5);   // 1 sec = 1000 millisecs
-} 
-catch(InterruptedException ex) {
-	Thread.currentThread().interrupt();
-}
 
 	/**
 	WebElement menuButton1 = driver.findElement(By.cssSelector("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20"));
