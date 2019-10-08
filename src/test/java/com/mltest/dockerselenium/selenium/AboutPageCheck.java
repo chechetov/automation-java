@@ -20,6 +20,8 @@ public class AboutPageCheck extends AbstractSeleniumTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AboutPageCheck.class);
 
+
+
 @Parameters({"MLMainUrl"})
 @BeforeClass
     public void setup(String MLMainUrl) {
@@ -33,13 +35,20 @@ public void LookAndHoverCss(String selector){
 	LOG.info("Looking for CSS: \n {} \n", selector);
 
 	WebElement targetElement = wait.until
-	(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
+	(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(selector)));
 
+	if (targetElement.isDisplayed())
+	{
 	String javaScript = "var evObj = document.createEvent('MouseEvents');" +
 			"evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);" +
 			"arguments[0].dispatchEvent(evObj);";
     JavascriptExecutor js  = (JavascriptExecutor) driver;
     js.executeScript(javaScript, targetElement);
+	targetElement.click();
+	}
+	else {
+		LOG.info("Element was not located and hovered: \n {} \n", selector);
+	}
 
 }
 
@@ -76,11 +85,18 @@ public void AboutTextCheck(String MLMainUrl){
 
 	/** WORKS */
 
-	
+	/**
 	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
+	*/
+	
+	/**
+	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div.menuButton-0-20");
+	*/
+	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)");
 
 	/**
-	LookAndActCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)","hover");
+
+	LookAndActCss("","hover");
 	*/
 
 try {

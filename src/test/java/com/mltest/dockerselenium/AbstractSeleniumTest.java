@@ -20,6 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.openqa.selenium.chrome.ChromeOptions;
+
+
 
 /**
  * A class that provides the basics for all of our Selenium needs between all of our
@@ -89,7 +92,18 @@ public void LogIn(String LogInPageAddress){
   public void connectRemote() throws Exception {
     // connect to the remote instance
     URL remoteUrl = new URL("http://127.0.0.1:4444/wd/hub");
+    
+    /**
     DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    driver = new RemoteWebDriver(remoteUrl, capabilities);
+    driver.manage.window.maximize();
+  */
+
+    ChromeOptions options = new ChromeOptions();
+    options.addArguments("--start-maximized");
+    DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+    
     driver = new RemoteWebDriver(remoteUrl, capabilities);
 
     // start the test
