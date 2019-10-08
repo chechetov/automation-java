@@ -8,4 +8,13 @@
     </classes>
   </test>
 
+  <test name="AboutPageCheck">
+  	<parameter name="MLMainUrl" value="https://www.moneylion.com/"/>
+    <classes>
+      <class name="com.mltest.dockerselenium.selenium.AboutPageCheck"/>
+    </classes>
+  </test>
+  
 </suite>
+
+

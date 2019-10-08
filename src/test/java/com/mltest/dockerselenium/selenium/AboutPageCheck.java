@@ -22,24 +22,12 @@ public class AboutPageCheck extends AbstractSeleniumTest {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AboutPageCheck.class);
 
-/**
 
 @Parameters({"MLMainUrl"})
 @BeforeClass
     public void setup(String MLMainUrl) {
-        System.err.println("Browser name in @BeforeClass is " + MLMainUrl);
+        System.err.println("Starttng Link in @BeforeClass is " + MLMainUrl);
     }
-*/
-
-public void ThreadSleep(int seconds){
-	try {
-		LOG.info("Sleeping for : {} seconds",seconds);
-		Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
-	} 
-	catch(InterruptedException ex) {
-		Thread.currentThread().interrupt();
-	}
-}
 
 /** 
 These are my wrappers to simplify hieararchy and logic 
@@ -68,6 +56,21 @@ public void LookAndHoverCss(String selector){
 	}
 }
 
+public void LookAndClickCss(String selector){
+
+	WebDriverWait wait = new WebDriverWait(driver,6);
+	LOG.info("Looking for CSS: \n {} \n", selector);
+	WebElement targetElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
+
+	if (targetElement.isDisplayed() ){
+		LOG.info("Element was found: \n {} \n", selector);
+		targetElement.click();
+		} 
+	else{
+		LOG.info("Element was NOT found: \n {} \n", selector);
+	}
+}
+
 public void LookAndClickJSElement(String selector){
 
 	JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -92,7 +95,7 @@ public void LookAndClickJSElement(String selector){
 	*/
 }
 
-public void VerifyText(String selector){
+public Map<String, String> VerifyText(String selector){
 
 	JavascriptExecutor executor = (JavascriptExecutor)driver;
 	WebDriverWait wait = new WebDriverWait(driver,10);
@@ -115,22 +118,8 @@ public void VerifyText(String selector){
 	map.put("textToSearch", textToSearch);
 	map.put("actualText", actualText);
 	LOG.info("DICT TEXT: {}",map.get("actualText"));
-	Assert.assertEquals(map.get("actualText"), map.get("actualText"));
-}
 
-public void LookAndClickCss(String selector){
-
-	WebDriverWait wait = new WebDriverWait(driver,6);
-	LOG.info("Looking for CSS: \n {} \n", selector);
-	WebElement targetElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(selector)));
-
-	if (targetElement.isDisplayed() ){
-		LOG.info("Element was found!");
-		targetElement.click();
-		} 
-	else{
-		LOG.info("Element was NOT found: \n {} \n", selector);
-	}
+	return map;
 }
 
 /** 
@@ -144,17 +133,22 @@ public void AboutTextCheck(String MLMainUrl){
 	driver.navigate().to(MLMainUrl);
 
 	/** 
-	Now let me use my wrappers 
-	ThreadSleeps for safety
+	Let's use my wrappers 
+	ThreadSleeps just for hard safety
 	*/
 
 	LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3)");
 	ThreadSleep(2);
+	
 	LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(3) > div > a:nth-child(1)");
 	ThreadSleep(2);
+	
 	LookAndClickJSElement("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[2]/div[2]");
 	ThreadSleep(5);
-	VerifyText("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[1]/div/div/div");
+
+	Map<String, String> map = VerifyText("//*[@id=\"root\"]/div/div/div[3]/div/div/div[2]/div[1]/div/div/div");
+
+	Assert.assertEquals(map.get("actualText"), map.get("actualText"));
 	takeScreenshot(driver);
 
 }

@@ -59,6 +59,7 @@ public abstract class AbstractSeleniumTest {
    * method that we run.
    * @throws Exception if anything goes horribly wrong during testing
    */
+
   @BeforeClass(alwaysRun = true)
   public static void initTest() throws Exception {
     String now = DateTimeFormat.forPattern("yyyy-MM-dd_HH-mm").print(DateTime.now());
@@ -67,9 +68,10 @@ public abstract class AbstractSeleniumTest {
     if (!Files.exists(screenshotPath)) {
       Files.createDirectories(screenshotPath);
     }
-
     LOG.info("Screenshots will be saved to {}", screenshotPath.toAbsolutePath());
   }
+
+
 
 /**
 
@@ -109,6 +111,16 @@ public void LogIn(String LogInPageAddress){
     // start the test
     timeStart = System.currentTimeMillis();
   }
+
+  public void ThreadSleep(int seconds){
+  try {
+    LOG.info("Sleeping for : {} seconds",seconds);
+    Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
+  } 
+  catch(InterruptedException ex) {
+    Thread.currentThread().interrupt();
+  }
+}
 
   /**
    * Requests that we always close the driver used for execution after every test.
