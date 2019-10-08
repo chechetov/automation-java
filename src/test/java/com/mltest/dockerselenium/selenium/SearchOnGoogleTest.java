@@ -61,18 +61,7 @@ public class SearchOnGoogleTest extends AbstractSeleniumTest {
   public static Object[][] getSearchTerms() {
     return new Object[][]{
       {"Gwar"},
-      {"Selenium"},
-      {"Richar Stallman"},
-      {"St. IGNUcius"},
-      {"obnoxious"},
       {"silly"},
     };
   }
-}
-
-public class MoneyLionMembershipPage extends AbstractSeleniumTest{
-
-private static final Logger LOG = LoggerFactory.getLogger(SearchOnGoogleTest.class);
-
-
 }

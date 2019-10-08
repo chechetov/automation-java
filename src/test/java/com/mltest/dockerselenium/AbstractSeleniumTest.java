@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
 /**
  * A class that provides the basics for all of our Selenium needs between all of our
  * tests.  This avoids the need to have us constantly look up data, attempt to find
@@ -66,6 +67,19 @@ public abstract class AbstractSeleniumTest {
 
     LOG.info("Screenshots will be saved to {}", screenshotPath.toAbsolutePath());
   }
+
+/**
+
+@BeforeClass()
+public void LogIn(String LogInPageAddress){
+
+    MLConstant MyConstant = new MLConstant();
+    LOG.info("MLConstant.URL :", MLConstant.URL);
+
+  LOG.info("Log to MoneyLion Website: ");
+  driver.navigate().to(LogInPageAddress);
+}
+*/
 
   /**
    * Requests that a new driver be created before every test execution.
