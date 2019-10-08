@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Example test run">
+  <test name="Simple Test">
+    <classes>
+
+    <!--
+      https://stackoverflow.com/questions/43293894/how-to-pass-parameters-to-beforeclass-afterclass-methods-through-testng-xml
+    --> 
+      <class name="com.mltest.dockerselenium.selenium.AboutPageCheck"/>
+      <parameter name="MLMainUrl" value="https://www.moneylion.com/"/>
+      <parameter name="MLLogInUrl" value="https://dashboard.moneylion.com/login"/>
+
+    </classes>
+  </test>
+</suite>
