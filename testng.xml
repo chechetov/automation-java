@@ -1,11 +1,18 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="AboutPageCheckSuite">
 
-  <test name="ThreeCardsCheck">
+  <test name="AboutPageCheck">
   	<parameter name="MLMainUrl" value="https://www.moneylion.com/"/>
+    <classes>
+      <class name="com.mltest.dockerselenium.selenium.AboutPageCheck"/>
+    </classes>
+  </test>
+
+  <test name="ThreeCardsCheck">
+    <parameter name="MLMainUrl" value="https://www.moneylion.com/"/>
     <classes>
       <class name="com.mltest.dockerselenium.selenium.ThreeCardsCheck"/>
     </classes>
   </test>
-
+  
 </suite>

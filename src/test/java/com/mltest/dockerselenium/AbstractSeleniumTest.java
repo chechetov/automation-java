@@ -63,7 +63,7 @@ public abstract class AbstractSeleniumTest {
   @BeforeClass(alwaysRun = true)
   public static void initTest() throws Exception {
     String now = DateTimeFormat.forPattern("yyyy-MM-dd_HH-mm").print(DateTime.now());
-    screenshotPath = Paths.get(System.getProperty("user.home")).resolve("Desktop").resolve("SeleniumExample").resolve(now);
+    screenshotPath = Paths.get(System.getProperty("user.home")).resolve("screenshots").resolve("moneylion-example").resolve(now);
 
     if (!Files.exists(screenshotPath)) {
       Files.createDirectories(screenshotPath);

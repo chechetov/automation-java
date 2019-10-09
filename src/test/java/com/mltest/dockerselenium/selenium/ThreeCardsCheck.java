@@ -156,119 +156,21 @@ public void ScrollToElement(String selector) {
 	executor.executeScript("window.scrollTo(arguments[0],arguments[1]);",String.valueOf(xcord), String.valueOf(ycord));
 	ThreadSleep(4);
 
+	WebElement cardOne = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div/div[1]"));
+	LOG.info("cardOne visible: {}", String.valueOf(cardOne.isDisplayed()));
+
 	// This does the first flip
 	LOG.info("Scrolling by 0.1");
 	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.1));	
 	ThreadSleep(3);
+	takeScreenshot(driver);
 
 	// This does the second flip
 	LOG.info("Scrolling by 0.5");
 	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.5));	
 	ThreadSleep(3);
+	takeScreenshot(driver);
 
-
-	/**
-
-	A LOT OF CODE I HAVE TRIED BEFORE!!
-
-	LOG.info("Focus");
-	//targetElement.sendKeys(Keys.SHIFT);
-
-	((JavascriptExecutor)driver).executeScript("window.focus();");
-	executor.executeScript("arguments[0].focus();",targetElement);	
-
-	LOG.info("Scrolling To: {}",String.valueOf(ycord));
-	executor.executeScript("window.scrollTo(arguments[0],arguments[1]);",String.valueOf(xcord), String.valueOf(ycord));
-	ThreadSleep(4);
-
-	LOG.info("Scrolling by 0.1");
-	executor.executeScript("window.scrollBy(0,200);");	
-	ThreadSleep(3);
-	/
-	**
-	LOG.info("Scrolling To: {}",String.valueOf(ycord));
-	executor.executeScript("window.scrollTo(0,arguments[0]);",String.valueOf(ycord));
-	ThreadSleep(4);
-
-	executor.executeScript("arguments[0].scrollIntoView(0);",targetElement);	
-	LOG.info("Scrolling by 0.1");
-	ThreadSleep(3);
-
-	*/
-
-	/**
-	String mousemoveJS = String.join("\n",
-	"var mouseMoveEvent = document.createEvent(\"MouseEvents\");mouseMoveEvent.initMouseEvent(" ,
-    "\"mousemove\", //event type : click, mousedown, mouseup, mouseover, mousemove, mouseout." , 
-    "true, //canBubble" , 
-    "false, //cancelable" ,
-           "window, //event's AbstractView : should be window",
-           " 3, // detail : Event's mouse click count ",
-           " 670, // screenX ",
-           " 1070, // screenY ", 
-           " 630, // clientX ", 
-           " 1032, // clientY ",
-           " false, // ctrlKey ",
-           " false, // altKey ",
-           " false, // shiftKey ",
-           " false, // metaKey  ",
-           " 0, // button : 0 = click, 1 = middle button, 2 = right button   ",
-           " null // relatedTarget : Only used with some event types (e.g. mouseover and mouseout). In other cases, pass null. ",
-           ");",
-           "document.dispatchEvent(mouseMoveEvent)"
-	);
-	String res = (String)executor.executeScript(mousemoveJS);
-	LOG.info("res: {} ", res);
-
-	*/
-
-	/**
-	
-	LOG.info("Scrolling To: {}",String.valueOf(ycord));
-	executor.executeScript("window.scrollTo(0,arguments[0]);",String.valueOf(ycord));
-	ThreadSleep(4);
-
-	LOG.info("Scrolling by 0.3");
-	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.3));	
-	ThreadSleep(3);
-	*/
-
-	/**
-
-	LOG.info("Mousemove...");
-	ThreadSleep(1);
-	LOG.info("Scrolling by 0.2");
-	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.2));	
-	ThreadSleep(3);
-	*/
-
-	/*
-	
-	String clientTopJS = (String) executor.executeScript("return arguments[0].getAttribute(offsetTop);",targetElement);
-
-	LOG.info("clientTopJS {}", clientTopJS);
-
-	*/
-	//String clientTop = (String) executor.executeScript("return arguments[0].getAttribuge.clientTop;",targetElement);
-
-	/**
-	clientTop
-	clientLeft
-	*/
-	/**
-	String clientLeft = (String) executor.executeScript("return arguments[0].clientLeft;",targetElement);
-
-	LOG.info("clientLeft: {}", clientLeft);
-	*/
-
-	/**
-
-	String checkText = 	(String)executor.executeScript("return \"HI\";", targetElement);
-	String checkText2 = (String)executor.executeScript("return String(arguments[0]);", targetElement);
-	
-	LOG.info("CT:: {} \n", checkText);
-	LOG.info("CT2:: {} \n", checkText2);
-	*/
 }
 
 	@Parameters({"MLMainUrl"})
@@ -295,7 +197,6 @@ public void ScrollToElement(String selector) {
 		takeScreenshot(driver);
 		Assert.assertEquals("1", "1");
 	}
-
 /** CLASSEND */
 }
 
