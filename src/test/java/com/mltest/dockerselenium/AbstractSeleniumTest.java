@@ -116,6 +116,8 @@ public void LogIn(String LogInPageAddress){
   try {
     LOG.info("Sleeping for : {} seconds",seconds);
     Thread.sleep(1000 * seconds);   // 1 sec = 1000 millisecs
+    LOG.info("Slept for : {} seconds",seconds);
+
   } 
   catch(InterruptedException ex) {
     Thread.currentThread().interrupt();
