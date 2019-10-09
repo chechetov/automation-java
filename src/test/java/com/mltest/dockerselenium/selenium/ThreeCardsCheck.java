@@ -152,7 +152,7 @@ public void ScrollToElement(String selector) {
 
 	JavascriptExecutor executor = (JavascriptExecutor)driver;
 
-	LOG.info("Scrolling To: {}",String.valueOf(ycord));
+	LOG.info("Scrolling To: {}",String.valueOf(ycord * 1.2));
 	executor.executeScript("window.scrollTo(arguments[0],arguments[1]);",String.valueOf(xcord), String.valueOf(ycord));
 	ThreadSleep(4);
 
@@ -275,31 +275,24 @@ public void ScrollToElement(String selector) {
 	@Test
 	public void ThreeCardTest(String MLMainUrl){
 
-/** 
+		//MLMainUrl = "https://www.moneylion.com/personal-finance-mobile-app";
+
+		driver.navigate().to(MLMainUrl);
+
+		/** 
 		Let's use my wrappers 
 		ThreadSleeps just for hard safety
 		*/
 
-
-/**		driver.navigate().to(MLMainUrl);
 		ThreadSleep(2);
-
 		LookAndHoverCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(2)");
 		ThreadSleep(2);
 		LookAndClickCss("#root > div > nav > div.navItemWrapper-0-4 > div > div.desktopMenuContainer-0-20 > div:nth-child(2) > div > a:nth-child(5)");
 		ThreadSleep(2);
-*/
-		//ScrollToElement("//*[@id=\"root\"]/div/div/div[2]");
-		MLMainUrl = "https://www.moneylion.com/personal-finance-mobile-app";
-		driver.navigate().to(MLMainUrl);
-
-
 		ScrollToElement("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div");
 		ThreadSleep(4);
 
-
 		takeScreenshot(driver);
-
 		Assert.assertEquals("1", "1");
 	}
 
