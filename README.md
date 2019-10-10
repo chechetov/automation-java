@@ -1,29 +1,32 @@
-# Java Selenium using Selenium HQ's Docker Images
+# Money Lion Test Task
 
 ## About
 
-Sample project showing how to use the []SeleniumHQ Docker images](https://github.com/SeleniumHQ/docker-selenium) with a basic Java project.  This focuses on a simple instance of Chrome set up on an Ubuntu Linux instance as provided by the root repository.  For details on how the Docker images actually work, see the documentation that has been provided in their repositories.  We only cover what is necessary to get started using them here assuming they don't disappear on us.  We only show you how to use the Chrome one, but it should be enough to get your started.
+This project covers Scenario 1 and Scenario 2 plus RestfulBooker API test from the test tasks.
+I did not do Scenario 3 due to time constrains.
+
+The project is built on docker-selenium image ( https://github.com/revof11/docker-selenium ) plus my own modifications such as maven, nano, python3-pip, netstat, htop, etc.
+
+I fetched maven projects ( https://github.com/revof11/docker-selenium ) for faster startup.
+
+Disclaimer: I have tried to execute Scenarios as closer to definition in the task as possible.
+Occasional issues may arise.
 
 ## Instructions
 
-> Can't make this any more simple...
+> Prerequisites: 
+> Install Docker at https://docs.docker.com/v17.09/engine/installation/
+> Install vncviewer from 
 
-1. Start the Docker container using `docker run -d -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:3.4.0-einsteinium`
-2. Launch the build of this project using `mvn -U clean test`
-3. Find the screenshots from each test run in `~/Desktop/SeleniumExample`
-4. ...
-5. Profit
-
-## Key Class
-
-The key class you are looking for in here is:  `com.revof11.dockerselenium.AbstractSeleniumTest`
-
-That class has all the code to use for connecting to the running Docker image as well as some utility methods to make sure that everything runs as expected.  Most importantly is this particular snippet that focuses on launching Chrome for us in the running image:
-
-```java
-  URL remoteUrl = new URL("http://127.0.0.1:4444/wd/hub");
-  DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-  WebDriver driver = new RemoteWebDriver(remoteUrl, capabilities);
-```
-
-That's all that we really need to do!
+1. Get the Docker tarball from `docker.link` with `cat docker.link | wget -i`
+2. Import tarball to Docker with `docker load < ~/chrome-node-original.tar`
+3. Run container with 
+`docker run -d -e SCREEN_WIDTH=1366 -e SCREEN_HEIGHT=768 -p 5900:5900 -p 4444:4444 -v /dev/shm:/dev/shm -v ~/dockershare:/home/seluser/code chrome-node-original`
+4. Open shell in container (assuming this only one container running) with 
+`ID=$(docker ps | awk '{printf $1}' | cut -c 10-);docker exec -it $ID /bin/bash;echo $ID;`
+5. Change folder to home with `cd ~/code/moneylion-example`
+6. Launch the build of this project using `mvn -U clean test`
+7. Find the screenshots from each test run in `~/code/screenshots`
+8. Find reports in `code/moneylion-example/target/surefire-reports` folder
+9. Launch API test with `python3 /home/seluser/code/moneylion-example/apitest/unifiTestWrapper.py`
+10. Find reports in `python3 /home/seluser/code/moneylion-example/apitest/reports/report` folder

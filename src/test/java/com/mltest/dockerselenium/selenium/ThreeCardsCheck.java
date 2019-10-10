@@ -157,20 +157,37 @@ public void ScrollToElement(String selector) {
 	ThreadSleep(4);
 
 	WebElement cardOne = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div/div[1]"));
-	LOG.info("cardOne visible: {}", String.valueOf(cardOne.isDisplayed()));
+	boolean cardOneVisible = cardOne.isDisplayed();
+	LOG.info("cardOne visible: {}", String.valueOf(cardOneVisible));
+
+	takeScreenshot(driver);
 
 	// This does the first flip
 	LOG.info("Scrolling by 0.1");
 	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.1));	
 	ThreadSleep(3);
+
+	WebElement cardTwo = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div/div[2]"));
+	boolean cardTwoVisible = cardTwo.isDisplayed();
+	LOG.info("cardTwo visible: {}", String.valueOf(cardTwoVisible));
+
 	takeScreenshot(driver);
 
 	// This does the second flip
 	LOG.info("Scrolling by 0.5");
 	executor.executeScript("window.scrollBy(0,arguments[0]);",String.valueOf(ycord * 0.5));	
 	ThreadSleep(3);
-	takeScreenshot(driver);
 
+	WebElement cardThree = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div/div[3]"));
+	boolean cardThreeVisible = cardTwo.isDisplayed();
+	LOG.info("cardThreevisible: {}", String.valueOf(cardThreeVisible));
+
+
+	// If everything is visible ...
+	boolean result = cardOneVisible && cardTwoVisible && cardThreeVisible;
+	Assert.assertEquals(result, true);
+
+	takeScreenshot(driver);
 }
 
 	@Parameters({"MLMainUrl"})
@@ -193,9 +210,6 @@ public void ScrollToElement(String selector) {
 		ThreadSleep(2);
 		ScrollToElement("//*[@id=\"root\"]/div/div/div[2]/div/div[2]/div/div/div");
 		ThreadSleep(4);
-
-		takeScreenshot(driver);
-		Assert.assertEquals("1", "1");
 	}
 /** CLASSEND */
 }
