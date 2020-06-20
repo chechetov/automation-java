@@ -1,19 +1,11 @@
 # Money Lion Test Task
 
 ## About
-
-This project covers Scenario 1 and Scenario 2 plus RestfulBooker API test from the test tasks.
-I did not do Scenario 3 due to time constrains.
+This project covers Scenario 1 and Scenario 2 plus RestfulBooker API test from test task sheet.
 
 The project is built on docker-selenium image ( https://github.com/revof11/docker-selenium ) plus my own modifications such as maven, nano, python3-pip, netstat, htop, etc.
 
-I fetched maven projects ( https://github.com/revof11/docker-selenium ) for faster startup.
-
-Disclaimer: I have tried to execute Scenarios as closer to definition in the task as possible.
-Occasional issues may arise.
-
 ## Instructions
-
 > Prerequisites: 
 > Install Docker at https://docs.docker.com/v17.09/engine/installation/
 > Install vncviewer from 
