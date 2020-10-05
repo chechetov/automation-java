@@ -3,14 +3,16 @@
 ## About
 This project covers Scenario 1 and Scenario 2 plus RestfulBooker API test from test task sheet.
 
-The project is built on docker-selenium image ( https://github.com/revof11/docker-selenium ) plus my own modifications such as maven, nano, python3-pip, netstat, htop, etc.
+The project is built using docker-selenium image 
+(https://github.com/revof11/docker-selenium) 
+with additional tools installed (maven, nano, python3-pip, netstat, htop, etc).
 
 ## Pre-requisites
-1. Install Docker at https://docs.docker.com/v17.09/engine/installation/
+1. Install Docker from https://docs.docker.com/v17.09/engine/installation/
 2. Install vncviewer from www.realvnc.com 
 
 ## Instructions 
-1. Get the Docker tarball from `docker.link` with `cat docker.link | wget -i`
+1. Get Docker tarball from `docker.link` with `cat docker.link | wget -i`
 2. Import tarball to Docker with `docker load < ~/chrome-node-original.tar`
 3. Run container with 
 `docker run -d -e SCREEN_WIDTH=1366 -e SCREEN_HEIGHT=768 -p 5900:5900 -p 4444:4444 -v /dev/shm:/dev/shm -v ~/dockershare:/home/seluser/code chrome-node-original`
