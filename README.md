@@ -19,7 +19,7 @@ with additional tools installed (maven, nano, python3-pip, netstat, htop, etc).
 4. Open shell in container (assuming this only one container running) with 
 `ID=$(docker ps | awk '{printf $1}' | cut -c 10-);docker exec -it $ID /bin/bash;echo $ID;`
 5. Change folder to home with `cd ~/code/moneylion-example`
-6. Launch the build of this project using `mvn -U clean test`
+6. Launch tests with `mvn -U clean test`
 7. Find the screenshots from each test run in `~/code/screenshots`
 8. Find reports in `code/moneylion-example/target/surefire-reports` folder
 9. Launch API test with `python3 /home/seluser/code/moneylion-example/apitest/unifiTestWrapper.py`
