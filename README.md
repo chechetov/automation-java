@@ -1,4 +1,4 @@
-# Money Lion Test Task
+# Automation Test Task example
 
 ## About
 This project covers Scenario 1 and Scenario 2 plus RestfulBooker API test from test task sheet.
